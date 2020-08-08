@@ -2,7 +2,6 @@ from ultracache import _thread_locals
 
 
 def _cleanup():
-    print("CLEANUP")
     if hasattr(_thread_locals, "ultracache_recorder"):
         delattr(_thread_locals, "ultracache_recorder")
     if hasattr(_thread_locals, "ultracache_attr_marker"):
