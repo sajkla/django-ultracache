@@ -5,15 +5,15 @@ setup(
     description="Drop-in replacement for Django's template fragment caching. Provides automatic cache invalidation.",
     long_description = open("README.rst", "r").read() + open("AUTHORS.rst", "r").read() + open("CHANGELOG.rst", "r").read(),
     version="2.0.0",
-    author="Praekelt Consulting",
-    author_email="dev@praekelt.com",
+    author="Hedley Roos",
+    author_email="hedleyroos@gmail.com",
     license="BSD",
-    url="http://github.com/praekelt/django-ultracache",
+    url="http://github.com/hedleyroos/django-ultracache",
     packages = find_packages(),
     dependency_links = [
     ],
     install_requires = [
-        "django",
+        "django>=2.0",
         "requests",
         "pika>=0.11,<1.0",
         "PyYAML"

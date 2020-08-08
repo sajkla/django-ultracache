@@ -2,7 +2,6 @@ from django.conf import settings
 from django.core.cache import cache
 from django.test import TestCase
 
-from ultracache import _thread_locals
 from ultracache.utils import Ultracache
 from ultracache.tests.models import DummyModel
 

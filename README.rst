@@ -2,7 +2,7 @@ Django Ultracache
 =================
 **Cache views, template fragments and arbitrary Python code. Monitor Django object changes to perform automatic fine-grained cache invalidation from Django level, through proxies, to the browser.**
 
-.. figure:: https://travis-ci.org/praekelt/django-ultracache.svg?branch=develop
+.. figure:: https://travis-ci.org/hedleyroos/django-ultracache.svg?branch=develop
    :align: center
    :alt: Travis
 
@@ -65,6 +65,8 @@ Installation
 #. Install or add ``django-ultracache`` to your Python path.
 
 #. Add ``ultracache`` to your ``INSTALLED_APPS`` setting.
+
+#. Add ``ultracache.middleware.UltraCacheMiddleware`` to your ``MIDDLEWARE`` setting. It is recommended to add it as one of the first entries.
 
 #. Ensure ``django.template.context_processors.request`` is in the context processors setting.
 
