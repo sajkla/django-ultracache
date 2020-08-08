@@ -13,7 +13,7 @@ setup(
     dependency_links = [
     ],
     install_requires = [
-        "django",
+        "django>=2.0",
         "requests",
         "pika>=0.11,<1.0",
         "PyYAML"
