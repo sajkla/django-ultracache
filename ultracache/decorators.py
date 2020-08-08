@@ -1,12 +1,11 @@
 import hashlib
 import types
-from functools import wraps
+from functools import wraps, WRAPPER_ASSIGNMENTS
 
 from django.conf import settings
 from django.core.cache import cache
 from django.http import HttpResponse
 from django.template.response import TemplateResponse
-from django.utils.decorators import available_attrs
 from django.views.generic.base import TemplateResponseMixin
 
 from ultracache import _thread_locals
@@ -17,7 +16,7 @@ def cached_get(timeout, *params):
     """Decorator applied specifically to a view's get method"""
 
     def decorator(view_func):
-        @wraps(view_func, assigned=available_attrs(view_func))
+        @wraps(view_func, assigned=WRAPPER_ASSIGNMENTS)
         def _wrapped_view(view_or_request, *args, **kwargs):
 
             # The type of the request gets muddled when using a function based

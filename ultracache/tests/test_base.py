@@ -9,7 +9,6 @@ from django.test.client import Client, RequestFactory
 from django.test.utils import override_settings
 from django.urls import reverse
 
-from ultracache import _thread_locals
 from ultracache.tests.models import DummyModel, DummyForeignModel, \
     DummyOtherModel
 from ultracache.tests import views
@@ -292,11 +291,6 @@ class DecoratorTestCase(TestCase):
         super(DecoratorTestCase, self).setUp()
         cache.clear()
         dummy_proxy.clear()
-        # Ultracache is built with the understanding that we have one thread
-        # that exists only during a request. Unit tests don't respect that
-        # because they are long running, so clear thread locals manually.
-        if hasattr(_thread_locals, "ultracache_recorder"):
-            delattr(_thread_locals, "ultracache_recorder")
 
     def test_method(self):
         """Render template through a view with get method decorated with
