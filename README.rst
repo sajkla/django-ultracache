@@ -244,7 +244,7 @@ The config file has these options:
 #. rabbit-url
    Specify RabbitMQ connection parameters in the AMQP URL format
    ``amqp://username:password@host:port/<virtual_host>[?query-string]``.
-   *Optional. Defaults to ``amqp://guest:guest@127.0.0.1:5672/%2F``. Note the
+   *Optional. Defaults to amqp://guest:guest@127.0.0.1:5672/%2F. Note the
    URL encoding for the path.*
 
 #. host
