@@ -1,7 +1,7 @@
 Note
 ====
 
-This is the official home of the project. It has moved from https://github.com/praekelt/django-ultracache.
+https://github.com/hedleyroos/django-ultracache is the official home of the project. It has moved from https://github.com/praekelt/django-ultracache.
 
 Django Ultracache
 =================
