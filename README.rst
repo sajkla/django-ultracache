@@ -1,3 +1,8 @@
+Note
+====
+
+This is the official home of the project. It has moved from https://github.com/praekelt/django-ultracache.
+
 Django Ultracache
 =================
 **Cache views, template fragments and arbitrary Python code. Monitor Django object changes to perform automatic fine-grained cache invalidation from Django level, through proxies, to the browser.**
