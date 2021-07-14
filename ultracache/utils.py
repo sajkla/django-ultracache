@@ -253,7 +253,9 @@ class Ultracache:
         s = ":".join([name] + [str(p) for p in params])
         hashed = hashlib.md5(s.encode("utf-8")).hexdigest()
         self.cache_key = "ucache-%s" % hashed
-        self.start_index = len(_thread_locals.ultracache_recorder) 
+        if not hasattr(_thread_locals, "ultracache_recorder"):
+            setattr(_thread_locals, "ultracache_recorder", [])
+        self.start_index = len(_thread_locals.ultracache_recorder)
         self.used = False
 
     @property

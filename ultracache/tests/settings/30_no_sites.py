@@ -20,7 +20,6 @@ INSTALLED_APPS = (
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
-    "django.contrib.sites",
     "rest_framework"
 )
 
@@ -31,8 +30,6 @@ CACHES = {
 }
 
 SECRET_KEY = "SECRET_KEY"
-
-TEMPLATE_DIRS = (os.path.realpath(os.path.dirname(__file__)) + "/ultracache/tests/templates/",)
 
 TEMPLATES = [
     {
@@ -47,6 +44,17 @@ TEMPLATES = [
             ]
         },
     },
+]
+
+MIDDLEWARE = [
+    "ultracache.middleware.UltraCacheMiddleware",
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
 ULTRACACHE = {

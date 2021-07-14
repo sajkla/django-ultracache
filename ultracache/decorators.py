@@ -1,12 +1,11 @@
 import hashlib
 import types
-from functools import wraps
+from functools import wraps, WRAPPER_ASSIGNMENTS, partial
 
 from django.conf import settings
 from django.core.cache import cache
 from django.http import HttpResponse
 from django.template.response import TemplateResponse
-from django.utils.decorators import available_attrs
 from django.views.generic.base import TemplateResponseMixin
 
 from ultracache import _thread_locals
@@ -17,7 +16,7 @@ def cached_get(timeout, *params):
     """Decorator applied specifically to a view's get method"""
 
     def decorator(view_func):
-        @wraps(view_func, assigned=available_attrs(view_func))
+        @wraps(view_func, assigned=WRAPPER_ASSIGNMENTS)
         def _wrapped_view(view_or_request, *args, **kwargs):
 
             # The type of the request gets muddled when using a function based
@@ -39,7 +38,11 @@ def cached_get(timeout, *params):
                 return view_func(view_or_request, *args, **kwargs)
 
             # Compute a cache key
-            li = [str(view_or_request.__class__), view_func.__name__]
+            if isinstance(view_func, partial):
+                func_name = view_func.func.__name__
+            else:
+                func_name = view_func.__name__
+            li = [str(view_or_request.__class__), func_name]
 
             # request.get_full_path is implicitly added it no other request
             # path is provided. get_full_path includes the querystring and is

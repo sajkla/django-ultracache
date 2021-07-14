@@ -1,8 +1,13 @@
+Note
+====
+
+https://github.com/hedleyroos/django-ultracache is the official home of the project. It has moved from https://github.com/praekelt/django-ultracache.
+
 Django Ultracache
 =================
 **Cache views, template fragments and arbitrary Python code. Monitor Django object changes to perform automatic fine-grained cache invalidation from Django level, through proxies, to the browser.**
 
-.. figure:: https://travis-ci.org/praekelt/django-ultracache.svg?branch=develop
+.. figure:: https://travis-ci.org/hedleyroos/django-ultracache.svg?branch=develop
    :align: center
    :alt: Travis
 
@@ -65,6 +70,8 @@ Installation
 #. Install or add ``django-ultracache`` to your Python path.
 
 #. Add ``ultracache`` to your ``INSTALLED_APPS`` setting.
+
+#. Add ``ultracache.middleware.UltraCacheMiddleware`` to your ``MIDDLEWARE`` setting. It is recommended to add it as one of the first entries.
 
 #. Ensure ``django.template.context_processors.request`` is in the context processors setting.
 
@@ -234,27 +241,26 @@ instruction to an associated reverse caching proxy. To run the script::
 
 The config file has these options:
 
-#. rabbit-url
-   Specify RabbitMQ connection parameters in the AMQP URL format
-   ``amqp://username:password@host:port/<virtual_host>[?query-string]``.
-   *Optional. Defaults to ``amqp://guest:guest@127.0.0.1:5672/%2F``. Note the
-   URL encoding for the path.*
+#. | rabbit-url
+   | Specify RabbitMQ connection parameters in the AMQP URL format ``amqp://username:password@host:port/<virtual_host>[?query-string]``.
+   | *Optional. Defaults to amqp://guest:guest@127.0.0.1:5672/%2F.
+     Note the URL encoding for the path.*
 
-#. host
-   A reverse caching proxy may be responsible for many domains (hosts), and
-   ultracache will keep track of the host that is involved in a purge request;
-   however, if you have a use case that does not supply a hostname, eg. doing a
-   PURGE request via curl, then forcing a hostname solves the use case.
-   *Optional.*
+#. | host
+   | A reverse caching proxy may be responsible for many domains (hosts), and
+     ultracache will keep track of the host that is involved in a purge request;
+     however, if you have a use case that does not supply a hostname, eg. doing a
+     PURGE request via curl, then forcing a hostname solves the use case.
+   | *Optional.*
 
-#. proxy-address
-   The IP address or hostname of the reverse caching proxy.
-   *Optional. Defaults to 127.0.0.1.*
+#. | proxy-address
+   | The IP address or hostname of the reverse caching proxy.
+   | *Optional. Defaults to 127.0.0.1.*
 
-#. logfile
-   Set to a file to log all purge instructions. Specify ``stdout`` to log to
-   standard out.
-   *Optional.*
+#. | logfile
+   | Set to a file to log all purge instructions. Specify ``stdout`` to log to
+     standard out.
+   | *Optional.*
 
 Other settings
 **************

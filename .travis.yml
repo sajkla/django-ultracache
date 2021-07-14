@@ -7,7 +7,17 @@ matrix:
         - python: 3.6
           env: TOXENV=django21
         - python: 3.6
+          env: TOXENV=django22
+        - python: 3.6
+          env: TOXENV=django30
+        - python: 3.6
           env: TOXENV=django20-no-sites
+        - python: 3.6
+          env: TOXENV=django21-no-sites
+        - python: 3.6
+          env: TOXENV=django22-no-sites
+        - python: 3.6
+          env: TOXENV=django30-no-sites
 
 install:
   - pip install tox
