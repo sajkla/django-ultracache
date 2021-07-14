@@ -1,8 +1,8 @@
 Changelog
 =========
 
-next
-----
+2.1.0
+-----
 #. Django 3 compatibility.
 #. Fix potential thread local residual data issue.
 
