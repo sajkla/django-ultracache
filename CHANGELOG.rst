@@ -1,6 +1,10 @@
 Changelog
 =========
 
+next
+----
+#. Ensure cache coherency should a purger fail.
+
 2.1.0
 -----
 #. Django 3 compatibility.

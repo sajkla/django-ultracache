@@ -61,9 +61,13 @@ def on_post_save(sender, **kwargs):
                 # this content type.
                 key = "ucache-ct-pth-%s" % ct.id
                 if purger is not None:
-                    for li in cache.get(key, []):
+                    # The key *must* be deleted first in case the purger fails
+                    items = cache.get(key, [])
+                    cache.delete(key)
+                    for li in items:
                         purger(li[0], li[1])
-                cache.delete(key)
+                else:
+                    cache.delete(key)
 
             else:
                 # Expire cache keys
@@ -80,9 +84,13 @@ def on_post_save(sender, **kwargs):
                 # Purge paths in reverse caching proxy
                 key = "ucache-pth-%s-%s" % (ct.id, obj.pk)
                 if purger is not None:
-                    for li in cache.get(key, []):
+                    # The key *must* be deleted first in case the purger fails
+                    items = cache.get(key, [])
+                    cache.delete(key)
+                    for li in items:
                         purger(li[0], li[1])
-                cache.delete(key)
+                else:
+                    cache.delete(key)
 
 
 @receiver(post_delete)
@@ -120,6 +128,9 @@ def on_post_delete(sender, **kwargs):
             # Invalidate paths in reverse caching proxy
             key = "ucache-pth-%s-%s" % (ct.id, obj.pk)
             if purger is not None:
-                for li in cache.get(key, []):
+                # The key *must* be deleted first in case the purger fails
+                items = cache.get(key, [])
+                for li in items:
                     purger(li[0], li[1])
-            cache.delete(key)
+            else:
+                cache.delete(key)
