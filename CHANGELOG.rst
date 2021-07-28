@@ -1,8 +1,8 @@
 Changelog
 =========
 
-next
-----
+2.1.1
+-----
 #. Ensure cache coherency should a purger fail.
 
 2.1.0
