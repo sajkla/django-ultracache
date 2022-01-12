@@ -82,7 +82,11 @@ def cached_get(timeout, *params):
                 elif isinstance(response, HttpResponse):
                     content = response.content
                 if content is not None:
-                    headers = getattr(response, "_headers", {})
+                    # Django 4 deprecates _headers and introduces headers. Drop to private API for compatibility.
+                    if hasattr(response, "headers"):
+                        headers = response.headers._store
+                    else:
+                        headers = getattr(response, "_headers", {})
                     cache.set(
                         cache_key,
                         {"content": content, "headers": headers},

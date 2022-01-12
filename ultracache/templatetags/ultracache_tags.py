@@ -1,6 +1,12 @@
 from django import template
-from django.utils.encoding import force_text
-from django.utils.translation import ugettext as _
+try:
+    from django.utils.encoding import force_str
+except ImportError:
+    from django.utils.encoding import force_text as force_str
+try:
+    from django.utils.translation import ugettext as _
+except ImportError:
+    from django.utils.translation import gettext as _
 from django.utils.functional import Promise
 from django.templatetags.cache import CacheNode
 from django.template.base import VariableDoesNotExist
@@ -67,7 +73,7 @@ class UltraCacheNode(CacheNode):
             except VariableDoesNotExist:
                 pass
             if isinstance(r, Promise):
-                r = force_text(r)
+                r = force_str(r)
             vary_on.append(r)
 
         cache_key = make_template_fragment_key(self.fragment_name, vary_on)
