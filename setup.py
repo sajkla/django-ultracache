@@ -4,7 +4,7 @@ setup(
     name="django-ultracache",
     description="Drop-in replacement for Django's template fragment caching. Provides automatic cache invalidation.",
     long_description = open("README.rst", "r").read() + open("AUTHORS.rst", "r").read() + open("CHANGELOG.rst", "r").read(),
-    version="2.1.1",
+    version="2.2",
     author="Hedley Roos",
     author_email="hedleyroos@gmail.com",
     license="BSD",
