@@ -20,22 +20,33 @@ Overview
 Cache views, template fragments and arbitrary Python code. Once cached we
 either avoid database queries and expensive computations, depending on the use
 case. In all cases affected caches are automatically expired when objects "red"
-or "blue" are modified, without us having to add "red" or "blue" to the cache.
+or "blue" are modified, without us having to explicitly make the cache aware of
+"red" or "blue".
 
 View::
 
-    from ultracache.decorators import cached_get, ultracache
+    from ultracache.decorators import ultracache
 
+    # The decorator with no parameters automatically caches on the request path
+    # and a minimal
+    # set of hidden parameters.
     @ultracache(300)
     class MyView(TemplateView):
         template_name = "my_view.html"
 
         def get_context_data(self, **kwargs):
             context = super().get_context_data(**kwargs)
-            # Note we never use red
-            red = Color.objects.get(slug="red")
-            # For our example color_slug is blue
+
+            # The URL that was called is eg. http://mysite.com/myview/blue.
+            # This view remains cached until "blue" is modified by any other
+            # code.
             context["color"] = Color.objects.get(slug=kwargs["color_slug"])
+
+            # Retrieve "red". Even though we never use red further in this code
+            # the cached view is still expired when red is modified by any
+            # other code.
+            red = Color.objects.get(slug="red")
+
             return context
 
 Template::
@@ -43,12 +54,12 @@ Template::
     {# variable "color" is the object "blue" #}
     {% load ultracache_tags %}
     {% ultracache 300 "color-info" color.pk %}
-        {# expensive properties #}
+        {# expensive properties follow #}
         {{ color.compute_valid_hex_codes }}
         {{ color.name_in_all_languages }}
     {% endultracache %}
 
-Python::
+Arbitrary Python::
 
     from ultracache.utils import Ultracache
 
@@ -63,6 +74,21 @@ Python::
         codes = color.compute_valid_hex_codes()
         uc.cache(codes)
     print(codes)
+
+View with more specific rules::
+
+    from ultracache.decorators import ultracache
+
+    # Serve different cached versions for anonymous and authenticated users. "request"
+    # is always in scope in the decorator.
+    @ultracache(300, "request.user.is_authenticated")
+    class MyView(TemplateView):
+        template_name = "my_view.html"
+
+        def get_context_data(self, **kwargs):
+            context = super().get_context_data(**kwargs)
+            context["show_private_messages"] = self.request.user.is_authenticated
+            return context
 
 Installation
 ------------

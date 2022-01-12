@@ -44,7 +44,7 @@ def cached_get(timeout, *params):
                 func_name = view_func.__name__
             li = [str(view_or_request.__class__), func_name]
 
-            # request.get_full_path is implicitly added it no other request
+            # request.get_full_path is implicitly added if no other request
             # path is provided. get_full_path includes the querystring and is
             # the more conservative approach but makes it trivially easy for a
             # request to bust through the cache.
