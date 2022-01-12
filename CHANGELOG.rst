@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.2
+---
+#. Django 4.0 compatibility.
+
 2.1.1
 -----
 #. Ensure cache coherency should a purger fail.

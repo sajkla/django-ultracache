@@ -557,13 +557,23 @@ class DecoratorTestCase(TestCase):
 
         # Initial render
         response = self.client.get(url)
-        self.assertEqual(response._headers['content-type'], ('Content-Type', 'application/json'))
-        self.assertEqual(response._headers['foo'], ('foo', 'bar'))
+        # Django 4 deprecates _headers and introduces headers
+        if hasattr(response, "headers"):
+            self.assertEqual(response.headers['content-type'], 'application/json')
+            self.assertEqual(response.headers['foo'], 'bar')
+        else:
+            self.assertEqual(response._headers['content-type'], ('Content-Type', 'application/json'))
+            self.assertEqual(response._headers['foo'], ('foo', 'bar'))
 
         # Second pass is cached
         response = self.client.get(url)
-        self.assertEqual(response._headers['content-type'], ('Content-Type', 'application/json'))
-        self.assertEqual(response._headers['foo'], ('foo', 'bar'))
+        # Django 4 deprecates _headers and introduces headers
+        if hasattr(response, "headers"):
+            self.assertEqual(response.headers['content-type'], 'application/json')
+            self.assertEqual(response.headers['foo'], 'bar')
+        else:
+            self.assertEqual(response._headers['content-type'], ('Content-Type', 'application/json'))
+            self.assertEqual(response._headers['foo'], ('foo', 'bar'))
 
     def test_cache_busting(self):
         """Test cache busting with and without random querystring param

@@ -44,7 +44,7 @@ def cached_get(timeout, *params):
                 func_name = view_func.__name__
             li = [str(view_or_request.__class__), func_name]
 
-            # request.get_full_path is implicitly added it no other request
+            # request.get_full_path is implicitly added if no other request
             # path is provided. get_full_path includes the querystring and is
             # the more conservative approach but makes it trivially easy for a
             # request to bust through the cache.
@@ -82,7 +82,11 @@ def cached_get(timeout, *params):
                 elif isinstance(response, HttpResponse):
                     content = response.content
                 if content is not None:
-                    headers = getattr(response, "_headers", {})
+                    # Django 4 deprecates _headers and introduces headers. Drop to private API for compatibility.
+                    if hasattr(response, "headers"):
+                        headers = response.headers._store
+                    else:
+                        headers = getattr(response, "_headers", {})
                     cache.set(
                         cache_key,
                         {"content": content, "headers": headers},
